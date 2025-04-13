@@ -1,12 +1,9 @@
-// controllers/recipesController.js
 let recipes = require('../models/dummyData');
 
-// Pobierz wszystkie przepisy
 exports.getAll = (req, res) => {
   res.json(recipes);
 };
 
-// Dodaj nowy przepis
 exports.create = (req, res) => {
   const { title, ingredients } = req.body;
   if (!title || !ingredients) {
@@ -17,7 +14,6 @@ exports.create = (req, res) => {
   res.status(201).json(newRecipe);
 };
 
-// Aktualizuj przepis
 exports.update = (req, res) => {
   const { id } = req.params;
   const index = recipes.findIndex(r => r.id == id);
@@ -29,7 +25,6 @@ exports.update = (req, res) => {
   }
 };
 
-// Usuń przepis
 exports.remove = (req, res) => {
   const { id } = req.params;
   const index = recipes.findIndex(r => r.id == id);
@@ -40,7 +35,6 @@ exports.remove = (req, res) => {
   res.status(204).end();
 };
 
-// Generowanie listy zakupów z wybranych przepisów
 exports.generateShoppingList = (req, res) => {
   const { ids } = req.body;
   if (!Array.isArray(ids)) {
@@ -50,7 +44,6 @@ exports.generateShoppingList = (req, res) => {
   const ingredientsSet = new Set();
 
   ids.forEach(id => {
-    // Dopasowujemy zarówno string jak i number, dlatego używamy == 
     const recipe = recipes.find(r => r.id == id);
     if (recipe) {
       recipe.ingredients.forEach(ingredient => ingredientsSet.add(ingredient));
